@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=PolarShell
+Comment=A polarshell application
+# The Exec line includes %u to pass the URL to the application
+Exec=/usr/local/bin/polarshell.exe %u
+Terminal=false
+Type=Application
+Icon=polarshell.exe
+Categories=Utility;
+StartupWMClass=polarshell.exe
+
+ 

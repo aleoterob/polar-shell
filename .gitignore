@@ -1,0 +1,47 @@
+# Local product spec (not published)
+SPECIFICATION.md
+
+# Task runner cache
+.task
+
+# Go / Wails build outputs
+bin/
+*.exe
+*.dll
+*.syso
+wails_windows_*.syso
+
+# Frontend dependencies and build artifacts
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Environment and local secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*~
+
+# IDE (optional local settings)
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+
+# Logs and coverage
+*.log
+coverage/
+frontend/coverage/
+
+# Linux / Windows packaging downloads (large binaries)
+build/linux/appimage/build/
+build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
+
+# Cursor / agent local state (if present)
+.cursor/
