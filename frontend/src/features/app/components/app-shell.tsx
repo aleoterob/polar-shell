@@ -1,6 +1,5 @@
 import { TerminalTabs } from "@/features/tabs/components/terminal-tabs";
 import { TerminalView } from "@/features/terminal/components/terminal-view";
-import { TopNavigation } from "@/features/top-navigation/components/top-navigation";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
 import { useTerminalApp } from "@/features/app/hooks/use-terminal-app";
 import { useTabsStore } from "@/features/tabs/hooks/use-tabs-store";
@@ -17,8 +16,6 @@ export function AppShell() {
   return (
     <TooltipProvider>
       <div className="flex h-screen w-screen flex-col bg-background">
-        <TopNavigation />
-
         <TerminalTabs
           tabs={tabs}
           activeTabId={activeTabId}
