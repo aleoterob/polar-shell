@@ -8,9 +8,9 @@ export function SettingsPage() {
   const section = useAtomValue(settingsSectionAtom);
 
   return (
-    <SidebarProvider className="flex h-svh min-h-0 w-full">
+    <SidebarProvider className="flex h-svh min-h-0 w-full items-stretch">
       <SettingsSidebar />
-      <div className="flex min-h-0 flex-1 items-start justify-center overflow-auto bg-background p-8">
+      <div className="settings-page-content flex h-full min-h-0 flex-1 items-start justify-center overflow-auto p-8">
         {section === 'languages' ? <LanguagesPanel /> : null}
       </div>
     </SidebarProvider>
