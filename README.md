@@ -9,9 +9,8 @@ The app is not a web page in a browser tab: it is a standalone `.exe` that embed
 - **Multiple tabs** — open, switch, and close terminal sessions independently
 - **Real shells** — PowerShell, CMD, WSL, and Git Bash (when available on the machine)
 - **Full terminal emulation** — ANSI colors, UTF-8, cursor, scrollback, resize, copy/paste via xterm.js
-- **Top navigation** — header actions and profiles panel to launch shells
-- **Settings** — font, size, scrollback, default shell; persisted under `%APPDATA%/PolarShell/`
-- **Command palette** — keyboard-driven actions
+- **Top navigation** — app header with branding
+- **App settings (backend)** — font, size, scrollback, default shell loaded from `%APPDATA%/PolarShell/` (no settings UI)
 - **Dark UI** — Tailwind CSS + [shadcn/ui](https://ui.shadcn.com) (Base UI primitives), editor-style tab bar
 
 ## How it works
@@ -115,7 +114,7 @@ The UI uses a **feature-based** layout under `frontend/src/`:
 
 | Area | Path | Contents |
 |------|------|----------|
-| **features** | `features/<name>/` | Domain UI: `app`, `command-palette`, `top-navigation`, `tabs`, `terminal`, `settings` |
+| **features** | `features/<name>/` | Domain UI: `app`, `top-navigation`, `tabs`, `terminal` |
 | **shared** | `shared/` | shadcn/ui (`components/ui`), `lib/utils`, Wails bridge (`services/terminal-bridge.ts`), global hooks |
 
 Each feature uses kebab-case folders and files, typically:
@@ -128,7 +127,7 @@ features/<feature>/
 └── types/
 ```
 
-Jotai state is split by domain: `tabs` (persisted tabs + sessions), `settings` (default shell, settings dialog), `top-navigation` (profiles sheet), `command-palette` (palette open). `app/hooks/use-terminal-app.ts` composes those hooks. Shared cross-cutting atoms can go in `shared/atoms/atoms.ts`.
+Jotai state lives in `tabs` (persisted tabs + sessions). `app/hooks/use-terminal-app.ts` composes tabs state and loads backend settings via `app/hooks/use-app-settings.ts`.
 
 Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 generate bindings`).
 
@@ -200,8 +199,6 @@ Availability is checked at runtime; missing shells are hidden in the UI.
 | Ctrl+Shift+T | New terminal tab |
 | Ctrl+Shift+W | Close active tab |
 | Ctrl+Tab | Next tab |
-| Ctrl+Shift+P | Command palette |
-| Ctrl+, | Settings |
 
 ## Project layout
 
@@ -215,7 +212,7 @@ polar-shell/
 ├── frontend/
 │   ├── bindings/        # Generated Wails TS bindings
 │   ├── src/
-│   │   ├── features/    # app, command-palette, top-navigation, tabs, terminal, settings
+│   │   ├── features/    # app, top-navigation, tabs, terminal
 │   │   ├── shared/      # components/ui, lib, hooks, services
 │   │   ├── App.tsx
 │   │   └── main.tsx

@@ -4,8 +4,6 @@ export interface KeyboardShortcutHandlers {
   onNewTab: () => void;
   onCloseTab: () => void;
   onNextTab: () => void;
-  onOpenCommandPalette: () => void;
-  onOpenSettings: () => void;
 }
 
 export function useKeyboardShortcuts(handlers: KeyboardShortcutHandlers) {
@@ -30,18 +28,6 @@ export function useKeyboardShortcuts(handlers: KeyboardShortcutHandlers) {
       if (withCtrl && !withShift && key === "tab") {
         event.preventDefault();
         handlers.onNextTab();
-        return;
-      }
-
-      if (withCtrl && withShift && key === "p") {
-        event.preventDefault();
-        handlers.onOpenCommandPalette();
-        return;
-      }
-
-      if (withCtrl && key === ",") {
-        event.preventDefault();
-        handlers.onOpenSettings();
       }
     };
 
