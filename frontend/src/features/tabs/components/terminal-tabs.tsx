@@ -27,14 +27,18 @@ export function TerminalTabs({
     >
       <div
         className={cn(
-          "flex min-w-0 shrink-0 items-end bg-background pl-0 pr-2",
+          "flex min-w-0 shrink-0 items-end bg-terminal-tab-bar-background pl-0 pr-2",
         )}
       >
         <div className="flex min-w-0 flex-1 items-end overflow-x-auto pl-0 pr-0.5 pt-0.5 pb-px">
           <div className="inline-flex w-max items-end gap-0.5">
             <TabsList variant="chrome">
               {tabs.map((tab) => (
-                <TabsTrigger key={tab.id} value={tab.id} className="group/tab">
+                <TabsTrigger
+                  key={tab.id}
+                  value={tab.id}
+                  className="group/tab data-active:bg-terminal-tab-active-background"
+                >
                   <span className="min-w-0 flex-1 truncate text-left">
                     {tab.title}
                   </span>

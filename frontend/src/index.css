@@ -27,6 +27,8 @@
   --color-destructive: var(--destructive);
   --color-border: var(--border);
   --color-terminal-tab-border: var(--terminal-tab-border);
+  --color-terminal-tab-bar-background: var(--terminal-tab-bar-background);
+  --color-terminal-tab-active-background: var(--terminal-tab-active-background);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-heading: var(--font-sans);
@@ -51,9 +53,10 @@
 
 :root {
   --radius: 0.625rem;
-  /** TODO: Convert to oklch. */
-  --terminal-tab-border: #464647;
-  --terminal-tab-border-muted: #333333;
+  --terminal-tab-border: oklch(0.3945 0.0017 286.32);
+  --terminal-tab-border-muted: oklch(0.3211 0 0);
+  --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
+  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
   --background: oklch(0.2679 0.0333 291.63);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -88,9 +91,10 @@
 }
 
 .dark {
-  /** TODO: Convert to oklch. */
-  --terminal-tab-border: #464647;
-  --terminal-tab-border-muted: #333333;
+  --terminal-tab-border: oklch(0.3945 0.0017 286.32);
+  --terminal-tab-border-muted: oklch(0.3211 0 0);
+  --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
+  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
   --background: oklch(0.2679 0.0333 291.63);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -122,6 +126,14 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer components {
+  [data-slot='tabs-list'][data-variant='chrome']
+    [data-slot='tabs-trigger'][data-active]:not([data-active='false']) {
+    background-color: #47455a;
+    background-color: var(--terminal-tab-active-background);
+  }
 }
 
 @layer base {
