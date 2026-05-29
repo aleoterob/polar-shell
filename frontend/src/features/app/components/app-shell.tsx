@@ -3,7 +3,10 @@ import { TerminalView } from "@/features/terminal/components/terminal-view";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
 import { useTerminalApp } from "@/features/app/hooks/use-terminal-app";
 import { useTabsStore } from "@/features/tabs/hooks/use-tabs-store";
-import { MainSidebar } from "@/features/main-sidebar/components/main-sidebar";
+import {
+  MainSidebar,
+  mainSidebarProviderStyle,
+} from "@/features/main-sidebar/components/main-sidebar";
 import { cn } from "@/shared/lib/utils";
 import { SidebarInset, SidebarProvider } from "@/shared/components/ui/sidebar";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
@@ -17,7 +20,11 @@ export function AppShell() {
 
   return (
     <TooltipProvider>
-      <SidebarProvider defaultOpen className="flex h-svh min-h-0 w-full bg-background">
+      <SidebarProvider
+        defaultOpen
+        className="flex h-svh min-h-0 w-full bg-background"
+        style={mainSidebarProviderStyle}
+      >
         <MainSidebar />
         <SidebarInset className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <TerminalTabs

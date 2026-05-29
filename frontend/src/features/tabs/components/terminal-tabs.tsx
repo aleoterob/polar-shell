@@ -27,7 +27,7 @@ export function TerminalTabs({
     >
       <div
         className={cn(
-          "flex min-w-0 shrink-0 items-end border-b border-terminal-tab-border bg-background pl-0 pr-2",
+          "flex min-w-0 shrink-0 items-end bg-background pl-0 pr-2",
         )}
       >
         <div className="flex min-w-0 flex-1 items-end overflow-x-auto pl-0 pr-0.5 pt-0.5 pb-px">
