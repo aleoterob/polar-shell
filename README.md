@@ -47,6 +47,8 @@ flowchart TB
 
 Each tab owns one session. Closing a tab closes only that ConPTY session.
 
+Open tabs (id, title, shell) and the active tab id are restored across restarts via `localStorage` (Jotai `atomWithStorage`). ConPTY sessions are always recreated on launch.
+
 ## Tech stack
 
 | Layer | Technologies |
@@ -55,7 +57,7 @@ Each tab owns one session. Closing a tab closes only that ConPTY session.
 | Backend | Go 1.25+, ConPTY (`rurreac/conpty`) |
 | Frontend | React 18, TypeScript, **Vite** |
 | Terminal UI | xterm.js 6 + Fit / Search / Web Links addons |
-| App UI | Tailwind CSS v4, shadcn/ui (Base UI), Zustand, Jotai |
+| App UI | Tailwind CSS v4, shadcn/ui (Base UI), [Jotai](https://jotai.org) |
 
 ## Prerequisites
 
@@ -120,14 +122,13 @@ Each feature uses kebab-case folders and files, typically:
 
 ```text
 features/<feature>/
-├── atoms/           # Jotai atoms (feature-scoped state)
+├── atoms/           # Jotai atoms for that domain (atoms.ts)
 ├── components/
-├── hooks/
-├── types/
-└── stores/          # only where needed (e.g. terminal tab state)
+├── hooks/           # Reads atoms from the same feature (or app orchestration)
+└── types/
 ```
 
-Shared Jotai atoms live in `shared/atoms/atoms.ts` (each feature uses `atoms/atoms.ts`).
+Jotai state is split by domain: `tabs` (persisted tabs + sessions), `settings` (default shell, settings dialog), `top-navigation` (profiles sheet), `command-palette` (palette open). `app/hooks/use-terminal-app.ts` composes those hooks. Shared cross-cutting atoms can go in `shared/atoms/atoms.ts`.
 
 Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 generate bindings`).
 
@@ -246,12 +247,36 @@ Bindings are generated into `frontend/bindings/` via `wails3 generate bindings`.
 |-------|-------------|
 | `bind: Solo se permite un uso... 9245` | Port 9245 is in use (often a leftover `node.exe` / Vite). Stop it: `Get-NetTCPConnection -LocalPort 9245 \| ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }`, then run `wails3 dev` again |
 | Wails cannot reach Vite | Confirm dev server on `http://127.0.0.1:9245`; see `build/config.yml` and `FRONTEND_DEVSERVER_URL` |
+| `eventcreate` / bindings module not found (Vite) | `frontend/bindings` missing (often after a failed `generate bindings` with "Acceso denegado"). Regenerate: `wails3 generate bindings -f '-buildvcs=false -gcflags=all="-l" -ldflags="-H windowsgui"' -clean=true -ts`, then `wails3 dev`. `common:dev:frontend` now generates bindings before Vite starts |
+| `generate bindings` → Acceso denegado | Stop `wails3 dev`/Vite, delete `frontend/.bindings-tmp-*`, re-run generate bindings. Dev builds skip `-clean` to reduce file locks on Windows |
 | Vite `Pre-transform error` / missing `.vite/deps/*.js` | Stale optimizer cache. In `frontend`: `npm run clean:vite`, then restart dev. `vite.config.ts` pre-bundles `@base-ui/react` subpaths to reduce this |
 | Build fails on `Remove-Item *.syso` | Use latest `build/windows/Taskfile.yml` (removes only the current arch `.syso`) |
+| Extra console window when running `bin/polarshell.exe` | Rebuild with `wails3 build` (GUI subsystem). DEV builds now use `-H windowsgui`; exe metadata uses `PolarShell` not the Wails placeholder |
+| **Smart App Control** blocks `polarshell.exe` as unsafe | Expected for **unsigned** local builds. SAC is unrelated to `-H windowsgui`. For day-to-day dev: turn off SAC under **Windows Security → App & browser control → Smart App Control**, or sign the binary (see [Code signing (Windows)](#code-signing-windows) below). There is no per-app “Run anyway” while SAC is in enforcement mode |
 | Tab close kills the whole app | Ensure backend session close is not double-closing ConPTY; update to latest `backend/terminal` |
 | Terminal dies after ~1s on load | Usually a frontend effect lifecycle issue; session hook must depend only on stable tab/shell ids |
 
 Run `wails3 doctor` for environment diagnostics.
+
+## Code signing (Windows)
+
+PolarShell builds are **not signed by default**. On Windows 11 with **Smart App Control** in enforcement mode, every fresh `bin/polarshell.exe` from `wails3 build` or `wails3 dev` can be blocked because the binary is unsigned and has no Microsoft cloud reputation — not because the app is malicious.
+
+**Local development (simplest):** Windows Security → **App & browser control** → **Smart App Control** → **Off**. Recent Windows 11 updates allow turning SAC off without reinstalling the OS; you can turn it back on later.
+
+**Distribution (recommended):** Sign the executable after build:
+
+1. Obtain a code-signing certificate (commercial CA, or [Microsoft Trusted Signing](https://learn.microsoft.com/en-us/azure/trusted-signing/) for eligible projects).
+2. Configure `SIGN_CERTIFICATE` or `SIGN_THUMBPRINT` in `build/windows/Taskfile.yml` (vars at the top).
+3. Store the cert password: `wails3 setup signing`
+4. Build, then sign:
+
+```bash
+wails3 build
+wails3 task windows:sign
+```
+
+Self-signed certificates often **still** fail SAC until reputation builds; use a trusted CA for releases.
 
 ## License
 

@@ -82,6 +82,8 @@ tasks:
             ref: .BUILD_FLAGS
           OBFUSCATED:
             ref: .OBFUSCATED
+          DEV:
+            ref: .DEV
     cmds:
       - task: frontend:run
         vars:
@@ -178,7 +180,8 @@ tasks:
     generates:
       - frontend/bindings/**/*
     cmds:
-      - wails3 generate bindings -f '{{.BUILD_FLAGS}}' -clean=true{{if eq .OBFUSCATED "true"}} -obfuscated{{end}} -ts
+      # DEV skips -clean to avoid deleting bindings while Vite holds them open (Windows "Acceso denegado").
+      - wails3 generate bindings -f '{{.BUILD_FLAGS}}'{{if ne .DEV "true"}} -clean=true{{end}}{{if eq .OBFUSCATED "true"}} -obfuscated{{end}} -ts
 
   generate:icons:
     summary: Generates Windows `.ico` and Mac `.icns` from frontend/public/mediawiki-logo.svg.
@@ -197,6 +200,10 @@ tasks:
     summary: Runs the frontend in development mode
     deps:
       - task: install:frontend:deps
+      - task: generate:bindings
+        vars:
+          BUILD_FLAGS: '-buildvcs=false -gcflags=all="-l" -ldflags="-H windowsgui"'
+          DEV: "true"
     cmds:
       - task: frontend:dev:{{.PACKAGE_MANAGER}}
 

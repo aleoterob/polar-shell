@@ -4,13 +4,15 @@ import {
   saveSettings,
   type AppSettings,
 } from "@/shared/services/terminal-bridge";
-import { useTerminalStore } from "@/features/terminal/stores/terminal-store";
+import { useAtomValue, useSetAtom } from "jotai";
+import { defaultShellAtom } from "@/features/settings/atoms/atoms";
 import type { ShellId } from "@/features/terminal/types/terminal";
 
 export function useAppSettings() {
   const [settings, setSettings] = useState<AppSettings | null>(null);
   const [loading, setLoading] = useState(true);
-  const setDefaultShell = useTerminalStore((state) => state.setDefaultShell);
+  const defaultShell = useAtomValue(defaultShellAtom);
+  const setDefaultShell = useSetAtom(defaultShellAtom);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,6 +49,7 @@ export function useAppSettings() {
   return {
     settings,
     loading,
+    defaultShell,
     persistSettings,
   };
 }

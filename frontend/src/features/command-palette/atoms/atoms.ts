@@ -1,1 +1,3 @@
-/** Command palette Jotai atoms. */
+import { atom } from "jotai";
+
+export const commandPaletteOpenAtom = atom(false);

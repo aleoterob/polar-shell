@@ -5,7 +5,7 @@ import { SettingsDialog } from "@/features/settings/components/settings-dialog";
 import { CommandPalette } from "@/features/command-palette/components/command-palette";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
 import { useTerminalApp } from "@/features/app/hooks/use-terminal-app";
-import { useTerminalStore } from "@/features/terminal/stores/terminal-store";
+import { useTabsStore } from "@/features/tabs/hooks/use-tabs-store";
 import { cn } from "@/shared/lib/utils";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 
@@ -27,7 +27,7 @@ export function AppShell() {
   } = useTerminalApp();
 
   const closeTab = useCloseTerminalTab();
-  const updateTabTitle = useTerminalStore((state) => state.updateTabTitle);
+  const { updateTabTitle, updateTabSessionId } = useTabsStore();
 
   return (
     <TooltipProvider>
@@ -67,11 +67,7 @@ export function AppShell() {
                 active={tab.id === activeTabId}
                 settings={settings}
                 onSessionReady={(sessionId) => {
-                  useTerminalStore.setState((state) => ({
-                    tabs: state.tabs.map((item) =>
-                      item.id === tab.id ? { ...item, sessionId } : item,
-                    ),
-                  }));
+                  updateTabSessionId(tab.id, sessionId);
                 }}
                 onSessionExit={() => {
                   updateTabTitle(tab.id, `${tab.title} (exited)`);

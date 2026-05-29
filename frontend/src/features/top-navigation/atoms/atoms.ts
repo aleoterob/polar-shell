@@ -1,1 +1,3 @@
-/** Top navigation Jotai atoms. */
+import { atom } from "jotai";
+
+export const profilesOpenAtom = atom(false);

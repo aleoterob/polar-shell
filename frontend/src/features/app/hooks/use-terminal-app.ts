@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { listShells, type ShellProfile } from "@/shared/services/terminal-bridge";
-import { useTerminalStore } from "@/features/terminal/stores/terminal-store";
 import type { ShellId, TerminalTab } from "@/features/terminal/types/terminal";
 import { useAppSettings } from "@/features/settings/hooks/use-app-settings";
+import { useSettingsUi } from "@/features/settings/hooks/use-settings-ui";
+import { useCommandPaletteState } from "@/features/command-palette/hooks/use-command-palette-state";
+import { useProfilesSheet } from "@/features/top-navigation/hooks/use-profiles-sheet";
+import { useTabsStore } from "@/features/tabs/hooks/use-tabs-store";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts";
 
@@ -16,22 +19,11 @@ function shellTitle(shellId: ShellId, shells: ShellProfile[]) {
 }
 
 export function useTerminalApp() {
-  const {
-    tabs,
-    activeTabId,
-    defaultShell,
-    profilesOpen,
-    settingsOpen,
-    commandPaletteOpen,
-    setProfilesOpen,
-    setSettingsOpen,
-    setCommandPaletteOpen,
-    addTab,
-    setActiveTab,
-    nextTab,
-  } = useTerminalStore();
-
-  const { settings, loading, persistSettings } = useAppSettings();
+  const { tabs, activeTabId, addTab, setActiveTab, nextTab } = useTabsStore();
+  const { defaultShell, settings, loading, persistSettings } = useAppSettings();
+  const { profilesOpen, setProfilesOpen } = useProfilesSheet();
+  const { settingsOpen, setSettingsOpen } = useSettingsUi();
+  const { commandPaletteOpen, setCommandPaletteOpen } = useCommandPaletteState();
   const closeTab = useCloseTerminalTab();
   const [shells, setShells] = useState<ShellProfile[]>([]);
 
@@ -53,10 +45,19 @@ export function useTerminalApp() {
   );
 
   useEffect(() => {
-    if (tabs.length === 0 && !loading) {
-      openNewTab(defaultShell);
+    if (tabs.length === 0) {
+      if (!loading) {
+        openNewTab(defaultShell);
+      }
+      return;
     }
-  }, [tabs.length, loading, defaultShell, openNewTab]);
+
+    const activeIsValid =
+      activeTabId != null && tabs.some((tab) => tab.id === activeTabId);
+    if (!activeIsValid) {
+      setActiveTab(tabs[0].id);
+    }
+  }, [tabs, activeTabId, loading, defaultShell, openNewTab, setActiveTab]);
 
   useKeyboardShortcuts({
     onNewTab: () => openNewTab(),
