@@ -4,7 +4,7 @@ import type { ShellId, TerminalTab } from "@/features/terminal/types/terminal";
 import { useAppSettings } from "@/features/app/hooks/use-app-settings";
 import { useTabsStore } from "@/features/tabs/hooks/use-tabs-store";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
-import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts";
+import { useKeyboardShortcuts } from "@/features/keyboard-shortcuts/hooks/use-keyboard-shortcuts";
 
 function createTabId() {
   return crypto.randomUUID();
