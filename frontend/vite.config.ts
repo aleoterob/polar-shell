@@ -17,5 +17,21 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Base UI uses deep imports; pre-bundle them up front to avoid stale .vite/deps chunks
+  // after HMR reloads (missing useButton-*.js / useIsoLayoutEffect-*.js errors).
+  optimizeDeps: {
+    holdUntilCrawlEnd: true,
+    include: [
+      "@base-ui/react/button",
+      "@base-ui/react/context-menu",
+      "@base-ui/react/dialog",
+      "@base-ui/react/input",
+      "@base-ui/react/menu",
+      "@base-ui/react/separator",
+      "@base-ui/react/tabs",
+      "@base-ui/react/tooltip",
+      "cmdk",
+    ],
+  },
   plugins: [react(), tailwindcss(), wails("./bindings")],
 });

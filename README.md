@@ -101,6 +101,33 @@ npm run build        # production bundle → frontend/dist (embedded by Go)
 npm run lint         # tsc --noEmit
 ```
 
+`npm run dev` runs `predev`, which clears `node_modules/.vite` to avoid stale dependency chunks after refactors or dependency updates. To clear the cache manually:
+
+```bash
+npm run clean:vite
+```
+
+### Frontend architecture
+
+The UI uses a **feature-based** layout under `frontend/src/`:
+
+| Area | Path | Contents |
+|------|------|----------|
+| **features** | `features/<name>/` | Domain UI: `app`, `command-palette`, `sidebar`, `tabs`, `terminal`, `settings` |
+| **shared** | `shared/` | shadcn/ui (`components/ui`), `lib/utils`, Wails bridge (`services/terminal-bridge.ts`), global hooks |
+
+Each feature uses kebab-case folders and files, typically:
+
+```text
+features/<feature>/
+├── components/
+├── hooks/
+├── types/
+└── stores/          # only where needed (e.g. terminal tab state)
+```
+
+Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 generate bindings`).
+
 ### Regenerate app icons (Windows taskbar / exe)
 
 Icons are generated from `frontend/public/mediawiki-logo.svg`:
@@ -120,7 +147,26 @@ wails3 build
 
 Output: `bin/polarshell.exe` (Windows GUI binary with embedded `frontend/dist` assets).
 
-Platform-specific tasks live under `build/windows/`, `build/darwin/`, etc. (Wails v3 default layout).
+### Explorer context menu (Windows)
+
+Add **Abrir en PolarShell** when right-clicking a folder or empty space inside a folder in File Explorer:
+
+```powershell
+cd build
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-shell-integration.ps1
+```
+
+Remove the menu entry:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-shell-integration.ps1 -Uninstall
+```
+
+Use `-ExePath` if the binary is not under `bin/polarshell.exe`. Requires no administrator rights (writes `HKCU` only).
+
+To launch `polarshell` from any terminal, add the install or build folder to your user `PATH` (e.g. `C:\Projects\polar-shell\bin` after `wails3 build`).
+
+Platform-specific tasks live under `build/windows/`, `build/darwin/`, etc. (Wails v3 default layout). Helper scripts: `build/scripts/` (icons, Vite wait, Explorer integration).
 
 ## Configuration
 
@@ -163,13 +209,16 @@ polar-shell/
 │   ├── terminal/        # ConPTY, session, manager, shell resolution
 │   └── events/          # Event name constants
 ├── frontend/
+│   ├── bindings/        # Generated Wails TS bindings
 │   ├── src/
-│   │   ├── components/  # App shell, tabs, terminal view, settings, …
-│   │   ├── hooks/       # Terminal session, app settings, shortcuts
-│   │   ├── services/    # Wails bindings bridge
-│   │   └── stores/      # Zustand (tabs, UI state)
-│   └── public/          # Static assets (logo, etc.)
-├── build/               # Icons, Windows manifest, Taskfile, dev scripts
+│   │   ├── features/    # app, command-palette, sidebar, tabs, terminal, settings
+│   │   ├── shared/      # components/ui, lib, hooks, services
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   └── public/          # Static assets (logo, fonts)
+├── build/
+│   ├── scripts/         # generate-app-icons, wait-for-vite, install-shell-integration
+│   └── windows/         # Windows Taskfile, icon, NSIS
 ├── main.go              # Wails app entry (windows build tag)
 └── terminalservice.go   # RPC service exposed to the frontend
 ```
@@ -192,7 +241,9 @@ Bindings are generated into `frontend/bindings/` via `wails3 generate bindings`.
 
 | Issue | What to try |
 |-------|-------------|
+| `bind: Solo se permite un uso... 9245` | Port 9245 is in use (often a leftover `node.exe` / Vite). Stop it: `Get-NetTCPConnection -LocalPort 9245 \| ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }`, then run `wails3 dev` again |
 | Wails cannot reach Vite | Confirm dev server on `http://127.0.0.1:9245`; see `build/config.yml` and `FRONTEND_DEVSERVER_URL` |
+| Vite `Pre-transform error` / missing `.vite/deps/*.js` | Stale optimizer cache. In `frontend`: `npm run clean:vite`, then restart dev. `vite.config.ts` pre-bundles `@base-ui/react` subpaths to reduce this |
 | Build fails on `Remove-Item *.syso` | Use latest `build/windows/Taskfile.yml` (removes only the current arch `.syso`) |
 | Tab close kills the whole app | Ensure backend session close is not double-closing ConPTY; update to latest `backend/terminal` |
 | Terminal dies after ~1s on load | Usually a frontend effect lifecycle issue; session hook must depend only on stable tab/shell ids |

@@ -1,4 +1,4 @@
-import { AppShell } from "@/components/Layout/AppShell";
+import { AppShell } from "@/features/app/components/app-shell";
 
 function App() {
   return <AppShell />;
