@@ -9,7 +9,7 @@ The app is not a web page in a browser tab: it is a standalone `.exe` that embed
 - **Multiple tabs** — open, switch, and close terminal sessions independently
 - **Real shells** — PowerShell, CMD, WSL, and Git Bash (when available on the machine)
 - **Full terminal emulation** — ANSI colors, UTF-8, cursor, scrollback, resize, copy/paste via xterm.js
-- **Profiles sidebar** — quick launch for installed shells
+- **Top navigation** — header actions and profiles panel to launch shells
 - **Settings** — font, size, scrollback, default shell; persisted under `%APPDATA%/PolarShell/`
 - **Command palette** — keyboard-driven actions
 - **Dark UI** — Tailwind CSS + [shadcn/ui](https://ui.shadcn.com) (Base UI primitives), editor-style tab bar
@@ -113,7 +113,7 @@ The UI uses a **feature-based** layout under `frontend/src/`:
 
 | Area | Path | Contents |
 |------|------|----------|
-| **features** | `features/<name>/` | Domain UI: `app`, `command-palette`, `sidebar`, `tabs`, `terminal`, `settings` |
+| **features** | `features/<name>/` | Domain UI: `app`, `command-palette`, `top-navigation`, `tabs`, `terminal`, `settings` |
 | **shared** | `shared/` | shadcn/ui (`components/ui`), `lib/utils`, Wails bridge (`services/terminal-bridge.ts`), global hooks |
 
 Each feature uses kebab-case folders and files, typically:
@@ -211,7 +211,7 @@ polar-shell/
 ├── frontend/
 │   ├── bindings/        # Generated Wails TS bindings
 │   ├── src/
-│   │   ├── features/    # app, command-palette, sidebar, tabs, terminal, settings
+│   │   ├── features/    # app, command-palette, top-navigation, tabs, terminal, settings
 │   │   ├── shared/      # components/ui, lib, hooks, services
 │   │   ├── App.tsx
 │   │   └── main.tsx

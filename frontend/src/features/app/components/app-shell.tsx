@@ -1,21 +1,13 @@
-import { PanelLeft, Search, Settings } from "lucide-react";
-import { AppLogo } from "@/features/app/components/app-logo";
-import { Button } from "@/shared/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/shared/components/ui/tooltip";
 import { TerminalTabs } from "@/features/tabs/components/terminal-tabs";
 import { TerminalView } from "@/features/terminal/components/terminal-view";
-import { AppSidebar } from "@/features/sidebar/components/app-sidebar";
+import { TopNavigation } from "@/features/top-navigation/components/top-navigation";
 import { SettingsDialog } from "@/features/settings/components/settings-dialog";
 import { CommandPalette } from "@/features/command-palette/components/command-palette";
 import { useCloseTerminalTab } from "@/features/tabs/hooks/use-close-terminal-tab";
 import { useTerminalApp } from "@/features/app/hooks/use-terminal-app";
 import { useTerminalStore } from "@/features/terminal/stores/terminal-store";
 import { cn } from "@/shared/lib/utils";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
 
 export function AppShell() {
   const {
@@ -23,10 +15,10 @@ export function AppShell() {
     activeTabId,
     shells,
     settings,
-    sidebarOpen,
+    profilesOpen,
     settingsOpen,
     commandPaletteOpen,
-    setSidebarOpen,
+    setProfilesOpen,
     setSettingsOpen,
     setCommandPaletteOpen,
     openNewTab,
@@ -40,56 +32,14 @@ export function AppShell() {
   return (
     <TooltipProvider>
       <div className="flex h-screen w-screen flex-col bg-background">
-        <header className="flex h-10 items-center justify-between border-b border-border bg-[#1e1e1e] px-3">
-          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-            <AppLogo />
-            PolarShell
-          </div>
-
-          <div className="flex items-center gap-1">
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Toggle sidebar"
-                  onClick={() => setSidebarOpen(true)}
-                >
-                  <PanelLeft className="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Profiles</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Command palette"
-                  onClick={() => setCommandPaletteOpen(true)}
-                >
-                  <Search className="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Command palette (Ctrl+Shift+P)</TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  aria-label="Settings"
-                  onClick={() => setSettingsOpen(true)}
-                >
-                  <Settings className="size-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Settings (Ctrl+,)</TooltipContent>
-            </Tooltip>
-          </div>
-        </header>
+        <TopNavigation
+          shells={shells}
+          profilesOpen={profilesOpen}
+          onProfilesOpenChange={setProfilesOpen}
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          onOpenSettings={() => setSettingsOpen(true)}
+          onNewTab={openNewTab}
+        />
 
         <TerminalTabs
           tabs={tabs}
@@ -136,13 +86,6 @@ export function AppShell() {
             </div>
           ) : null}
         </main>
-
-        <AppSidebar
-          open={sidebarOpen}
-          onOpenChange={setSidebarOpen}
-          shells={shells}
-          onNewTab={openNewTab}
-        />
 
         <SettingsDialog
           open={settingsOpen}

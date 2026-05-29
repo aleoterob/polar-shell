@@ -5,11 +5,11 @@ interface TerminalStoreState {
   tabs: TerminalTab[];
   activeTabId: string | null;
   defaultShell: ShellId;
-  sidebarOpen: boolean;
+  profilesOpen: boolean;
   settingsOpen: boolean;
   commandPaletteOpen: boolean;
   setDefaultShell: (shellId: ShellId) => void;
-  setSidebarOpen: (open: boolean) => void;
+  setProfilesOpen: (open: boolean) => void;
   setSettingsOpen: (open: boolean) => void;
   setCommandPaletteOpen: (open: boolean) => void;
   addTab: (tab: TerminalTab) => void;
@@ -23,11 +23,11 @@ export const useTerminalStore = create<TerminalStoreState>((set, get) => ({
   tabs: [],
   activeTabId: null,
   defaultShell: "powershell",
-  sidebarOpen: false,
+  profilesOpen: false,
   settingsOpen: false,
   commandPaletteOpen: false,
   setDefaultShell: (shellId) => set({ defaultShell: shellId }),
-  setSidebarOpen: (open) => set({ sidebarOpen: open }),
+  setProfilesOpen: (open) => set({ profilesOpen: open }),
   setSettingsOpen: (open) => set({ settingsOpen: open }),
   setCommandPaletteOpen: (open) => set({ commandPaletteOpen: open }),
   addTab: (tab) =>
