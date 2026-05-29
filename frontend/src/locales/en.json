@@ -1,0 +1,25 @@
+{
+  "mainSidebar": {
+    "settings": "Settings"
+  },
+  "settings": {
+    "backToApp": "Back to application",
+    "general": "General",
+    "languages": "Languages",
+    "languageSpanish": "Spanish",
+    "languageEnglish": "English"
+  },
+  "tabs": {
+    "closeTab": "Close {{title}}",
+    "newTab": "New terminal tab"
+  },
+  "app": {
+    "tabExited": "{{title}} (exited)",
+    "emptyTabsHint": "Press + or Ctrl+Shift+T to open a terminal"
+  },
+  "terminal": {
+    "errors": {
+      "startSessionFailed": "Failed to start terminal session"
+    }
+  }
+}

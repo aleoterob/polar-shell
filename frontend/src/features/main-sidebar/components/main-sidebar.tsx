@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Link } from '@tanstack/react-router';
 import { Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import {
   Sidebar,
   SidebarContent,
@@ -27,6 +28,7 @@ export function MainSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useTranslation();
   const { state, isMobile } = useSidebar();
   const expandIfCollapsed = useExpandSidebarOnClick();
   const showSettingsTooltip = state === 'collapsed' && !isMobile;
@@ -47,11 +49,11 @@ export function MainSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               render={<Link to="/settings" onClick={expandIfCollapsed} />}
-              tooltip={showSettingsTooltip ? 'Settings' : undefined}
+              tooltip={showSettingsTooltip ? t('mainSidebar.settings') : undefined}
               className="cursor-pointer"
             >
               <Settings />
-              <span>Settings</span>
+              <span>{t('mainSidebar.settings')}</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

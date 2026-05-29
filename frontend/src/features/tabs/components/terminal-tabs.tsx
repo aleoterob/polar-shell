@@ -1,4 +1,5 @@
 import { Plus, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { cn } from '@/shared/lib/utils';
@@ -12,6 +13,7 @@ export function TerminalTabs({
   onCloseTab,
   onNewTab,
 }: TerminalTabsProps) {
+  const { t } = useTranslation();
   const { createCloseClickHandler, createCloseKeyHandler } =
     useTerminalTabClose(onCloseTab);
 
@@ -27,7 +29,7 @@ export function TerminalTabs({
     >
       <div
         className={cn(
-          "flex min-w-0 shrink-0 items-end bg-background pl-0 pr-2",
+          'flex min-w-0 shrink-0 items-end bg-background pl-0 pr-2',
         )}
       >
         <div className="flex min-w-0 flex-1 items-end overflow-x-auto pl-0 pr-0.5 pt-0.5 pb-px">
@@ -45,7 +47,7 @@ export function TerminalTabs({
                   <span
                     role="button"
                     tabIndex={-1}
-                    aria-label={`Close ${tab.title}`}
+                    aria-label={t('tabs.closeTab', { title: tab.title })}
                     className={cn(
                       'inline-flex shrink-0 rounded p-0.5 opacity-0 transition-opacity',
                       'hover:bg-muted group-hover/tab:opacity-100 group-data-active/tab:opacity-100',
@@ -64,7 +66,7 @@ export function TerminalTabs({
               variant="ghost"
               size="icon-xs"
               className="size-6 shrink-0"
-              aria-label="New terminal tab"
+              aria-label={t('tabs.newTab')}
               onClick={onNewTab}
             >
               <Plus className="size-4" />

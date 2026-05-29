@@ -30,6 +30,7 @@
   --color-terminal-tab-bar-background: var(--terminal-tab-bar-background);
   --color-terminal-tab-active-background: var(--terminal-tab-active-background);
   --color-settings-sidebar-background: var(--settings-sidebar-background);
+  --color-settings-card-active-background: var(--settings-card-active-background);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-heading: var(--font-sans);
@@ -90,6 +91,7 @@
   --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
   --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
   --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
+  --settings-card-active-background: oklch(0.3299 0.0281 290.5);
 }
 
 .dark {
@@ -130,6 +132,7 @@
   --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
   --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
   --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
+  --settings-card-active-background: oklch(0.3299 0.0281 290.5);
 }
 
 @layer components {

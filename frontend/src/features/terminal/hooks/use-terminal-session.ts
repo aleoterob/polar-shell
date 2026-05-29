@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { SearchAddon } from "@xterm/addon-search";
@@ -67,6 +68,7 @@ export function useTerminalSession({
   onSessionReady,
   onSessionExit,
 }: UseTerminalSessionOptions) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const terminalRef = useRef<Terminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -242,7 +244,7 @@ export function useTerminalSession({
         const message =
           startError instanceof Error
             ? startError.message
-            : "Failed to start terminal session";
+            : t('terminal.errors.startSessionFailed');
         setError(message);
       }
     };
@@ -252,7 +254,7 @@ export function useTerminalSession({
     return () => {
       disposed = true;
     };
-  }, [active, shellId]);
+  }, [active, shellId, t]);
 
   useEffect(() => {
     if (!active || !ready) {
