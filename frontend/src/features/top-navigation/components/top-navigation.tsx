@@ -28,7 +28,7 @@ export function TopNavigation({
 
   return (
     <>
-      <header className="flex h-10 items-center justify-between border-b border-border bg-[#262335] px-3">
+      <header className="flex h-10 items-center justify-between border-b border-border bg-background px-3">
         <div className="flex items-center gap-2 text-sm font-medium text-foreground">
           <AppLogo />
           PolarShell

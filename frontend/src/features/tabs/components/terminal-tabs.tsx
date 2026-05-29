@@ -1,8 +1,8 @@
 import { Plus, X } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { cn } from "@/shared/lib/utils";
 import { useTerminalTabClose } from "@/features/tabs/hooks/use-terminal-tab-close";
-import { useTerminalTabStyles } from "@/features/tabs/hooks/use-terminal-tab-styles";
 import type { TerminalTabsProps } from "@/features/tabs/types/terminal-tabs";
 
 export function TerminalTabs({
@@ -14,8 +14,6 @@ export function TerminalTabs({
 }: TerminalTabsProps) {
   const { createCloseClickHandler, createCloseKeyHandler } =
     useTerminalTabClose(onCloseTab);
-  const { barClassName, listClassName, triggerClassName, closeButtonClassName } =
-    useTerminalTabStyles();
 
   return (
     <Tabs
@@ -27,14 +25,15 @@ export function TerminalTabs({
       }}
       className="gap-0"
     >
-      <div className={barClassName}>
-        <TabsList variant="default" className={listClassName}>
+      <div
+        className={cn(
+          "flex h-10 min-w-0 shrink-0 items-end gap-1 overflow-x-auto overflow-y-hidden",
+          "border-b border-terminal-tab-border bg-background px-2 pt-1",
+        )}
+      >
+        <TabsList variant="chrome">
           {tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.id}
-              value={tab.id}
-              className={triggerClassName}
-            >
+            <TabsTrigger key={tab.id} value={tab.id} className="group/tab">
               <span className="min-w-0 flex-1 truncate text-left">
                 {tab.title}
               </span>
@@ -42,7 +41,10 @@ export function TerminalTabs({
                 role="button"
                 tabIndex={-1}
                 aria-label={`Close ${tab.title}`}
-                className={closeButtonClassName}
+                className={cn(
+                  "inline-flex shrink-0 rounded p-0.5 opacity-0 transition-opacity",
+                  "hover:bg-muted group-hover/tab:opacity-100 group-data-active/tab:opacity-100",
+                )}
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={createCloseClickHandler(tab.id)}
                 onKeyDown={createCloseKeyHandler(tab.id)}
