@@ -23,12 +23,14 @@ export function LanguagesPanel() {
 
   return (
     <div className="flex w-full max-w-sm flex-col items-start">
-      <h1 className="m-0 p-0 font-semibold tracking-tight">
-        <div className="flex h-7 items-center gap-2.5">
-          <Globe className="block size-6 shrink-0" aria-hidden />
-          <span className="text-xl leading-none">{t('settings.languages')}</span>
-        </div>
-      </h1>
+      <div className="settings-languages-title-divider">
+        <h1 className="m-0 p-0 font-semibold tracking-tight">
+          <div className="flex h-7 items-center gap-2.5">
+            <Globe className="block size-6 shrink-0" aria-hidden />
+            <span className="text-xl leading-none">{t('settings.languages')}</span>
+          </div>
+        </h1>
+      </div>
 
       <RadioGroup
         value={language}
@@ -37,7 +39,7 @@ export function LanguagesPanel() {
             setLanguage(value as AppLanguage);
           }
         }}
-        className="mt-10 flex w-full flex-row flex-wrap items-stretch justify-center gap-5"
+        className="mt-12 flex w-full flex-row flex-wrap items-stretch justify-center gap-5"
       >
         {LANGUAGE_DISPLAY_ORDER.map((lang) => (
           <LanguageOptionCard
