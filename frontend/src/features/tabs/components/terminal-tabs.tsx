@@ -27,7 +27,7 @@ export function TerminalTabs({
     >
       <div
         className={cn(
-          "flex min-w-0 shrink-0 items-end bg-terminal-tab-bar-background pl-0 pr-2",
+          "flex min-w-0 shrink-0 items-end bg-background pl-0 pr-2",
         )}
       >
         <div className="flex min-w-0 flex-1 items-end overflow-x-auto pl-0 pr-0.5 pt-0.5 pb-px">
@@ -63,7 +63,7 @@ export function TerminalTabs({
             <Button
               variant="ghost"
               size="icon-xs"
-              className="size-7 shrink-0"
+              className="size-6 shrink-0"
               aria-label="New terminal tab"
               onClick={onNewTab}
             >

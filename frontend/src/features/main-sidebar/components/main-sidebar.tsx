@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { Link } from '@tanstack/react-router';
 import { Settings } from 'lucide-react';
 import {
   Sidebar,
@@ -45,9 +46,9 @@ export function MainSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
+              render={<Link to="/settings" onClick={expandIfCollapsed} />}
               tooltip={showSettingsTooltip ? 'Settings' : undefined}
               className="cursor-pointer"
-              onClick={expandIfCollapsed}
             >
               <Settings />
               <span>Settings</span>
