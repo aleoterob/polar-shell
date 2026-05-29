@@ -1,0 +1,1 @@
+/** Top navigation Jotai atoms. */

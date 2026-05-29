@@ -1,0 +1,1 @@
+/** App-scoped Jotai atoms. */

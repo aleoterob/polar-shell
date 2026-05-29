@@ -55,7 +55,7 @@ Each tab owns one session. Closing a tab closes only that ConPTY session.
 | Backend | Go 1.25+, ConPTY (`rurreac/conpty`) |
 | Frontend | React 18, TypeScript, **Vite** |
 | Terminal UI | xterm.js 6 + Fit / Search / Web Links addons |
-| App UI | Tailwind CSS v4, shadcn/ui (Base UI), Zustand |
+| App UI | Tailwind CSS v4, shadcn/ui (Base UI), Zustand, Jotai |
 
 ## Prerequisites
 
@@ -120,11 +120,14 @@ Each feature uses kebab-case folders and files, typically:
 
 ```text
 features/<feature>/
+├── atoms/           # Jotai atoms (feature-scoped state)
 ├── components/
 ├── hooks/
 ├── types/
 └── stores/          # only where needed (e.g. terminal tab state)
 ```
+
+Shared Jotai atoms live in `shared/atoms/atoms.ts` (each feature uses `atoms/atoms.ts`).
 
 Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 generate bindings`).
 
