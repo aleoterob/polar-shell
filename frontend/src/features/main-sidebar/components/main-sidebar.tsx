@@ -31,7 +31,8 @@ export function MainSidebar({
   const { t } = useTranslation();
   const { state, isMobile } = useSidebar();
   const expandIfCollapsed = useExpandSidebarOnClick();
-  const showSettingsTooltip = state === 'collapsed' && !isMobile;
+  const isIconCollapsed = state === 'collapsed' && !isMobile;
+  const showSettingsTooltip = isIconCollapsed;
 
   return (
     <Sidebar
@@ -40,8 +41,36 @@ export function MainSidebar({
       className={cn('!border-r-0', className)}
       {...props}
     >
-      <SidebarHeader className="flex flex-row items-center justify-end p-2 group-data-[collapsible=icon]:justify-center">
-        <SidebarTrigger onClick={expandIfCollapsed} />
+      <SidebarHeader
+        className={cn(
+          'flex flex-row items-center gap-2 p-2',
+          'group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:gap-1.5',
+        )}
+      >
+        <button
+          type="button"
+          onClick={expandIfCollapsed}
+          className={cn(
+            'inline-flex min-w-0 flex-1 items-center gap-2 overflow-hidden rounded-md border-0 bg-transparent p-0 text-left',
+            'group-data-[collapsible=icon]:flex-none group-data-[collapsible=icon]:justify-center',
+            'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+            isIconCollapsed && 'cursor-pointer',
+          )}
+        >
+          <img
+            src="/mediawiki-logo.svg"
+            alt=""
+            aria-hidden
+            className="block size-5 shrink-0 self-center"
+          />
+          <span className="-translate-y-px truncate text-[13px] font-medium leading-none group-data-[collapsible=icon]:hidden">
+            PolarShell
+          </span>
+        </button>
+        <SidebarTrigger
+          onClick={expandIfCollapsed}
+          className="shrink-0 group-data-[collapsible=icon]:self-center"
+        />
       </SidebarHeader>
       <SidebarContent />
       <SidebarFooter>
