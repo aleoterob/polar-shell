@@ -1,7 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -51,6 +51,9 @@
 
 :root {
   --radius: 0.625rem;
+  /** TODO: Convert to oklch. */
+  --terminal-tab-border: #464647;
+  --terminal-tab-border-muted: #333333;
   --background: oklch(0.2679 0.0333 291.63);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -78,13 +81,14 @@
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent: oklch(0.333 0.0333 291.63);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
+  /** TODO: Convert to oklch. */
   --terminal-tab-border: #464647;
   --terminal-tab-border-muted: #333333;
   --background: oklch(0.2679 0.0333 291.63);
@@ -114,7 +118,7 @@
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent: oklch(0.333 0.0333 291.63);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
@@ -127,7 +131,7 @@
 
   body {
     @apply antialiased bg-background text-foreground;
-    font-family: "Segoe UI", system-ui, sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     margin: 0;
     overflow: hidden;
   }

@@ -1,10 +1,17 @@
 import type { CSSProperties } from 'react';
+import { Settings } from 'lucide-react';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarTrigger,
+  useSidebar,
 } from '@/shared/components/ui/sidebar';
+import { useExpandSidebarOnClick } from '@/features/main-sidebar/hooks/use-expand-sidebar-on-click';
 import { cn } from '@/shared/lib/utils';
 
 /** NOTE: Expanded sidebar width (shadcn default is 16rem). */
@@ -19,6 +26,10 @@ export function MainSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const { state, isMobile } = useSidebar();
+  const expandIfCollapsed = useExpandSidebarOnClick();
+  const showSettingsTooltip = state === 'collapsed' && !isMobile;
+
   return (
     <Sidebar
       side="left"
@@ -27,9 +38,23 @@ export function MainSidebar({
       {...props}
     >
       <SidebarHeader className="flex flex-row items-center justify-end p-2 group-data-[collapsible=icon]:justify-center">
-        <SidebarTrigger />
+        <SidebarTrigger onClick={expandIfCollapsed} />
       </SidebarHeader>
       <SidebarContent />
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip={showSettingsTooltip ? 'Settings' : undefined}
+              className="cursor-pointer"
+              onClick={expandIfCollapsed}
+            >
+              <Settings />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 }

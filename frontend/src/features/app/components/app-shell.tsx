@@ -7,6 +7,7 @@ import {
   MainSidebar,
   mainSidebarProviderStyle,
 } from "@/features/main-sidebar/components/main-sidebar";
+import { useMainSidebarState } from "@/features/main-sidebar/hooks/use-main-sidebar-state";
 import { cn } from "@/shared/lib/utils";
 import { SidebarInset, SidebarProvider } from "@/shared/components/ui/sidebar";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
@@ -17,11 +18,14 @@ export function AppShell() {
 
   const closeTab = useCloseTerminalTab();
   const { updateTabTitle, updateTabSessionId } = useTabsStore();
+  const { open: mainSidebarOpen, setOpen: setMainSidebarOpen } =
+    useMainSidebarState();
 
   return (
     <TooltipProvider>
       <SidebarProvider
-        defaultOpen
+        open={mainSidebarOpen}
+        onOpenChange={setMainSidebarOpen}
         className="flex h-svh min-h-0 w-full bg-background"
         style={mainSidebarProviderStyle}
       >
