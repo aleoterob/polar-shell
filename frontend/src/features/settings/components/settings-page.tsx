@@ -1,7 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { LanguagesPanel } from '@/features/settings/components/languages/languages-panel';
 import { SettingsSidebar } from '@/features/settings/components/settings-sidebar';
-import { settingsSectionAtom } from '@/features/settings/atoms/settings-section-atom';
+import { settingsSectionAtom } from '@/features/settings/atoms/atoms';
 import { SidebarProvider } from '@/shared/components/ui/sidebar';
 
 export function SettingsPage() {

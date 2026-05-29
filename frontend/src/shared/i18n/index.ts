@@ -7,14 +7,14 @@ import {
   FALLBACK_LANGUAGE,
   SUPPORTED_LANGUAGES,
 } from '@/shared/i18n/constants';
-import { getStoredLanguage } from '@/shared/i18n/language-storage';
+import { readStoredAppLanguage } from '@/shared/i18n/atoms/atoms';
 
 void i18n.use(initReactI18next).init({
   resources: {
     en: { translation: en },
     es: { translation: es },
   },
-  lng: getStoredLanguage(),
+  lng: readStoredAppLanguage(),
   fallbackLng: FALLBACK_LANGUAGE,
   supportedLngs: [...SUPPORTED_LANGUAGES],
   ns: [defaultNS],
