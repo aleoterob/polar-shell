@@ -29,6 +29,7 @@
   --color-terminal-tab-border: var(--terminal-tab-border);
   --color-terminal-tab-bar-background: var(--terminal-tab-bar-background);
   --color-terminal-tab-active-background: var(--terminal-tab-active-background);
+  --color-settings-sidebar-background: var(--settings-sidebar-background);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-heading: var(--font-sans);
@@ -53,10 +54,6 @@
 
 :root {
   --radius: 0.625rem;
-  --terminal-tab-border: oklch(0.3945 0.0017 286.32);
-  --terminal-tab-border-muted: oklch(0.3211 0 0);
-  --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
-  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
   --background: oklch(0.2679 0.0333 291.63);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -88,13 +85,15 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
   --terminal-tab-border: oklch(0.3945 0.0017 286.32);
   --terminal-tab-border-muted: oklch(0.3211 0 0);
   --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
   --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
+  --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
+}
+
+.dark {
+  --radius: 0.625rem;
   --background: oklch(0.2679 0.0333 291.63);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -126,6 +125,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --terminal-tab-border: oklch(0.3945 0.0017 286.32);
+  --terminal-tab-border-muted: oklch(0.3211 0 0);
+  --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
+  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
+  --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
 }
 
 @layer components {
