@@ -29,7 +29,7 @@ export function TerminalView({
   });
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-[#0c0c0c]">
+    <div className="relative h-full w-full overflow-hidden bg-terminal-background">
       <div ref={containerRef} className="h-full w-full p-1" />
       {error ? (
         <div className="absolute inset-0 flex items-center justify-center text-sm text-destructive">

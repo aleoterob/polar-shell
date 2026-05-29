@@ -29,6 +29,7 @@
   --color-terminal-tab-border: var(--terminal-tab-border);
   --color-terminal-tab-bar-background: var(--terminal-tab-bar-background);
   --color-terminal-tab-active-background: var(--terminal-tab-active-background);
+  --color-terminal-background: var(--terminal-background);
   --color-settings-sidebar-background: var(--settings-sidebar-background);
   --color-settings-card-active-background: var(
     --settings-card-active-background
@@ -92,10 +93,11 @@
   --terminal-tab-border: oklch(0.3945 0.0017 286.32);
   --terminal-tab-border-muted: oklch(0.3211 0 0);
   --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
-  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
+  --terminal-tab-active-background: oklch(0.2679 0.0333 291.63);
   --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
   --settings-card-active-background: oklch(0.3299 0.0281 290.5);
   --page-background: oklch(0.2653 0.0333 291.63);
+  --terminal-background: oklch(0.2679 0.0333 291.63);
 }
 
 .dark {
@@ -134,10 +136,11 @@
   --terminal-tab-border: oklch(0.3945 0.0017 286.32);
   --terminal-tab-border-muted: oklch(0.3211 0 0);
   --terminal-tab-bar-background: oklch(0.22 0.0333 291.63);
-  --terminal-tab-active-background: oklch(0.333 0.0333 291.63);
+  --terminal-tab-active-background: oklch(0.2679 0.0333 291.63);
   --settings-sidebar-background: oklch(0.2444 0.0284 290.24);
   --settings-card-active-background: oklch(0.3299 0.0281 290.5);
   --page-background: oklch(0.2653 0.0333 291.63);
+  --terminal-background: oklch(0.2679 0.0333 291.63);
 }
 
 @layer components {
@@ -149,6 +152,12 @@
 
   .settings-page-content {
     background-color: var(--page-background);
+  }
+
+  .xterm,
+  .xterm .xterm-viewport,
+  .xterm .xterm-screen {
+    background-color: var(--terminal-background);
   }
 
   .settings-languages-title-divider {

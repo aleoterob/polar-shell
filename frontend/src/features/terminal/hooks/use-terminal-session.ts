@@ -15,6 +15,7 @@ import {
   type AppSettings,
 } from "@/shared/services/terminal-bridge";
 import type { ShellId } from "@/features/terminal/types/terminal";
+import { resolveCssVariableColor } from "@/shared/lib/resolve-css-variable-color";
 
 interface UseTerminalSessionOptions {
   tabId: string;
@@ -25,13 +26,21 @@ interface UseTerminalSessionOptions {
   onSessionExit?: (exitCode: number) => void;
 }
 
-const defaultTheme = {
-  background: "#0c0c0c",
+const TERMINAL_BACKGROUND_FALLBACK = "#0c0c0c";
+
+function buildTerminalTheme() {
+  const background = resolveCssVariableColor(
+    "--terminal-background",
+    TERMINAL_BACKGROUND_FALLBACK,
+  );
+
+  return {
+  background,
   foreground: "#cccccc",
   cursor: "#ffffff",
-  cursorAccent: "#0c0c0c",
+  cursorAccent: background,
   selectionBackground: "#264f78",
-  black: "#0c0c0c",
+  black: background,
   red: "#f14c4c",
   green: "#23d18b",
   yellow: "#f5f543",
@@ -47,7 +56,8 @@ const defaultTheme = {
   brightMagenta: "#d670d6",
   brightCyan: "#29b8db",
   brightWhite: "#ffffff",
-};
+  };
+}
 
 function applyTerminalSettings(terminal: Terminal, settings: AppSettings | null) {
   if (!settings) {
@@ -105,7 +115,7 @@ export function useTerminalSession({
       scrollback: 10000,
       fontFamily: "Cascadia Mono, Consolas, monospace",
       fontSize: 14,
-      theme: defaultTheme,
+      theme: buildTerminalTheme(),
       allowProposedApi: true,
     });
 
