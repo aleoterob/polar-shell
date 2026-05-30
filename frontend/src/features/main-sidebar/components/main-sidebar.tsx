@@ -14,8 +14,10 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar';
 import { useExpandSidebarOnClick } from '@/features/main-sidebar/hooks/use-expand-sidebar-on-click';
+import { AnimatedArrow } from '@/features/welcome/components/animated-arrow';
 import { SBAddWorkspaceBtn } from '@/features/workspaces/components/sb-add-workspace-btn';
 import { SBWorkspacesLabel } from '@/features/workspaces/components/sb-workspaces-label';
+import { useWorkspaces } from '@/features/workspaces/hooks/use-workspaces';
 import { cn } from '@/shared/lib/utils';
 
 /** NOTE: Expanded sidebar width (shadcn default is 16rem). */
@@ -33,6 +35,7 @@ export function MainSidebar({
   const { t } = useTranslation();
   const { state, isMobile } = useSidebar();
   const expandIfCollapsed = useExpandSidebarOnClick();
+  const { hasWorkspaces } = useWorkspaces();
   const isIconCollapsed = state === 'collapsed' && !isMobile;
   const showSettingsTooltip = isIconCollapsed;
 
@@ -85,7 +88,10 @@ export function MainSidebar({
         {!isIconCollapsed ? (
           <>
             <SBWorkspacesLabel />
-            <SBAddWorkspaceBtn />
+            <div className="flex w-full items-center justify-end gap-4 pr-1.5">
+              {!hasWorkspaces ? <AnimatedArrow /> : null}
+              <SBAddWorkspaceBtn />
+            </div>
           </>
         ) : null}
       </SidebarContent>

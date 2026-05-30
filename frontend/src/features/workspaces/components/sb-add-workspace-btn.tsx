@@ -11,7 +11,7 @@ export function SBAddWorkspaceBtn() {
       render={<Link to="/workspace" />}
       variant="supabase"
       size="sm"
-      className="ml-auto mr-1.5 h-[25px] w-fit rounded-full px-2 text-[11px] font-normal transform-none pr-3"
+      className="h-[25px] w-fit shrink-0 rounded-full px-2 pr-3 text-[11px] font-normal transform-none"
     >
       <PlusIcon className="size-3.5 shrink-0" strokeWidth={2} aria-hidden />
       <span className="leading-none">{t('workspaces.addWorkspace')}</span>

@@ -1,21 +1,21 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { AppLayout } from '@/features/app/components/app-layout';
-import { HomePage } from '@/features/app/components/home-page';
+import { WelcomePage } from '@/features/welcome/components/welcome-page';
 import { hasPersistedWorkspaces } from '@/features/workspaces/lib/get-persisted-workspaces';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/welcome')({
   beforeLoad: () => {
-    if (!hasPersistedWorkspaces()) {
-      throw redirect({ to: '/welcome' });
+    if (hasPersistedWorkspaces()) {
+      throw redirect({ to: '/' });
     }
   },
-  component: HomeRoute,
+  component: WelcomeRoute,
 });
 
-function HomeRoute() {
+function WelcomeRoute() {
   return (
     <AppLayout>
-      <HomePage />
+      <WelcomePage />
     </AppLayout>
   );
 }

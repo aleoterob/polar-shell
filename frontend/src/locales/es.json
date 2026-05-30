@@ -7,6 +7,10 @@
     "pageTitle": "Nuevo workspace",
     "addWorkspace": "Nuevo workspace"
   },
+  "welcome": {
+    "title": "Bienvenido a PolarShell",
+    "description": "Crea tu primer workspace para empezar a usar terminales y organizar tus proyectos."
+  },
   "settings": {
     "backToApp": "Volver a la aplicación",
     "general": "General",
