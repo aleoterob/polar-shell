@@ -39,6 +39,7 @@ func main() {
 		Height:           800,
 		MinWidth:         640,
 		MinHeight:        400,
+		StartState:       application.WindowStateMaximised,
 		BackgroundColour: application.NewRGB(12, 12, 12),
 		URL:              "/",
 	})
