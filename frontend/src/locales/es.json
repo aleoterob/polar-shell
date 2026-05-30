@@ -4,7 +4,8 @@
   },
   "workspaces": {
     "title": "Workspaces",
-    "addWorkspace": "Añadir workspace"
+    "pageTitle": "Nuevo workspace",
+    "addWorkspace": "Nuevo workspace"
   },
   "settings": {
     "backToApp": "Volver a la aplicación",

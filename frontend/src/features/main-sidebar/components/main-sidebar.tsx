@@ -54,12 +54,17 @@ export function MainSidebar({
           onClick={expandIfCollapsed}
           className={cn(
             'inline-flex min-w-0 flex-1 items-center gap-2 overflow-hidden rounded-md border-0 bg-transparent p-0 text-left',
-            'group-data-[collapsible=icon]:flex-none group-data-[collapsible=icon]:justify-center',
+            'group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:flex-none group-data-[collapsible=icon]:justify-center',
             'focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
             isIconCollapsed && 'cursor-pointer',
           )}
         >
-          <div className="flex items-center gap-2 pl-1">
+          <div
+            className={cn(
+              'flex items-center gap-2 pl-1',
+              'group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:pl-0',
+            )}
+          >
             <img
               src="/react-dark.svg"
               alt=""
