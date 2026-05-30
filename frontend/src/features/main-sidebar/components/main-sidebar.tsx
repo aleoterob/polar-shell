@@ -14,6 +14,8 @@ import {
   useSidebar,
 } from '@/shared/components/ui/sidebar';
 import { useExpandSidebarOnClick } from '@/features/main-sidebar/hooks/use-expand-sidebar-on-click';
+import { SBAddWorkspaceBtn } from '@/features/workspaces/components/sb-add-workspace-btn';
+import { SBWorkspacesLabel } from '@/features/workspaces/components/sb-workspaces-label';
 import { cn } from '@/shared/lib/utils';
 
 /** NOTE: Expanded sidebar width (shadcn default is 16rem). */
@@ -74,7 +76,14 @@ export function MainSidebar({
           className="shrink-0 group-data-[collapsible=icon]:self-center"
         />
       </SidebarHeader>
-      <SidebarContent />
+      <SidebarContent className="flex flex-col gap-2 p-2">
+        {!isIconCollapsed ? (
+          <>
+            <SBWorkspacesLabel />
+            <SBAddWorkspaceBtn />
+          </>
+        ) : null}
+      </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>

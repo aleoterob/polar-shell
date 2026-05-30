@@ -35,6 +35,10 @@
     --settings-card-active-background
   );
   --color-page-background: var(--page-background);
+  --color-supabase-background: var(--supabase-background);
+  --color-supabase-background-hover: var(--supabase-background-hover);
+  --color-supabase-border: var(--supabase-border);
+  --color-supabase-border-hover: var(--supabase-border-hover);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-heading: var(--font-sans);
@@ -98,6 +102,10 @@
   --settings-card-active-background: oklch(0.3299 0.0281 290.5);
   --page-background: oklch(0.2653 0.0333 291.63);
   --terminal-background: oklch(0.2679 0.0333 291.63);
+  --supabase-background: oklch(0.4335 0.103 157.11);
+  --supabase-background-hover: oklch(0.4976 0.0888 161.19);
+  --supabase-border: oklch(0.5369 0.119 158.47);
+  --supabase-border-hover: oklch(0.7541 0.1526 159.4);
 }
 
 .dark {
@@ -141,6 +149,10 @@
   --settings-card-active-background: oklch(0.3299 0.0281 290.5);
   --page-background: oklch(0.2653 0.0333 291.63);
   --terminal-background: oklch(0.2679 0.0333 291.63);
+  --supabase-background: oklch(0.4335 0.103 157.11);
+  --supabase-background-hover: oklch(0.4976 0.0888 161.19);
+  --supabase-border: oklch(0.5369 0.119 158.47);
+  --supabase-border-hover: oklch(0.7541 0.1526 159.4);
 }
 
 @layer components {

@@ -18,6 +18,8 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        supabase:
+          "rounded-full border-0 bg-supabase-background text-foreground shadow-none ring-1 ring-supabase-border antialiased transform-gpu overflow-hidden hover:bg-supabase-background-hover hover:ring-supabase-border-hover focus-visible:border-supabase-border-hover focus-visible:ring-1 focus-visible:ring-supabase-border-hover aria-expanded:bg-supabase-background-hover aria-expanded:ring-supabase-border-hover",
       },
       size: {
         default:

@@ -2,6 +2,10 @@
   "mainSidebar": {
     "settings": "Settings"
   },
+  "workspaces": {
+    "title": "Workspaces",
+    "addWorkspace": "Add workspace"
+  },
   "settings": {
     "backToApp": "Back to application",
     "general": "General",
