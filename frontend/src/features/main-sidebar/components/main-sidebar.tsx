@@ -57,15 +57,17 @@ export function MainSidebar({
             isIconCollapsed && 'cursor-pointer',
           )}
         >
-          <img
-            src="/mediawiki-logo.svg"
-            alt=""
-            aria-hidden
-            className="block size-5 shrink-0 self-center"
-          />
-          <span className="-translate-y-px truncate text-[13px] font-medium leading-none group-data-[collapsible=icon]:hidden">
-            PolarShell
-          </span>
+          <div className="flex items-center gap-2 pl-1">
+            <img
+              src="/react-dark.svg"
+              alt=""
+              aria-hidden
+              className="block size-5 shrink-0 self-center animate-[spin_12s_linear_infinite]"
+            />
+            <span className="-translate-y-px truncate text-[13px] font-medium leading-none group-data-[collapsible=icon]:hidden">
+              PolarShell
+            </span>
+          </div>
         </button>
         <SidebarTrigger
           onClick={expandIfCollapsed}
@@ -78,7 +80,9 @@ export function MainSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               render={<Link to="/settings" onClick={expandIfCollapsed} />}
-              tooltip={showSettingsTooltip ? t('mainSidebar.settings') : undefined}
+              tooltip={
+                showSettingsTooltip ? t('mainSidebar.settings') : undefined
+              }
               className="cursor-pointer"
             >
               <Settings />
