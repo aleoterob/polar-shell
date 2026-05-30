@@ -8,7 +8,7 @@ import {
   tabsAtom,
   updateTabSessionIdAtom,
   updateTabTitleAtom,
-} from "@/features/tabs/atoms/atoms";
+} from "@/features/tabs/atoms/tabs-atoms";
 
 export function useTabsStore() {
   const tabs = useAtomValue(tabsAtom);

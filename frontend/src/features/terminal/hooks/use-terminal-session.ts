@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Terminal } from "@xterm/xterm";
 import { FitAddon } from "@xterm/addon-fit";
 import { SearchAddon } from "@xterm/addon-search";
@@ -16,6 +15,10 @@ import {
 } from "@/shared/services/terminal-bridge";
 import type { ShellId } from "@/features/terminal/types/terminal";
 import { resolveCssVariableColor } from "@/shared/lib/resolve-css-variable-color";
+
+export type TerminalSessionError =
+  | { kind: "startSessionFailed" }
+  | { kind: "message"; message: string };
 
 interface UseTerminalSessionOptions {
   tabId: string;
@@ -78,7 +81,6 @@ export function useTerminalSession({
   onSessionReady,
   onSessionExit,
 }: UseTerminalSessionOptions) {
-  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const terminalRef = useRef<Terminal | null>(null);
   const fitAddonRef = useRef<FitAddon | null>(null);
@@ -88,7 +90,7 @@ export function useTerminalSession({
   const unsubscribeExitRef = useRef<(() => void) | null>(null);
   const activeRef = useRef(active);
   const [ready, setReady] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<TerminalSessionError | null>(null);
 
   activeRef.current = active;
 
@@ -251,11 +253,11 @@ export function useTerminalSession({
         if (disposed) {
           return;
         }
-        const message =
+        setError(
           startError instanceof Error
-            ? startError.message
-            : t('terminal.errors.startSessionFailed');
-        setError(message);
+            ? { kind: "message", message: startError.message }
+            : { kind: "startSessionFailed" },
+        );
       }
     };
 
@@ -264,7 +266,7 @@ export function useTerminalSession({
     return () => {
       disposed = true;
     };
-  }, [active, shellId, t]);
+  }, [active, shellId]);
 
   useEffect(() => {
     if (!active || !ready) {

@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'react-i18next';
 import { appLanguageAtom } from '@/shared/i18n/atoms/atoms';
@@ -8,16 +7,13 @@ export function useAppLanguage() {
   const { i18n } = useTranslation();
   const [language, setLanguageAtom] = useAtom(appLanguageAtom);
 
-  const setLanguage = useCallback(
-    (nextLanguage: AppLanguage) => {
-      if (nextLanguage === language) {
-        return;
-      }
-      setLanguageAtom(nextLanguage);
-      void i18n.changeLanguage(nextLanguage);
-    },
-    [i18n, language, setLanguageAtom],
-  );
+  const setLanguage = (nextLanguage: AppLanguage) => {
+    if (nextLanguage === language) {
+      return;
+    }
+    setLanguageAtom(nextLanguage);
+    void i18n.changeLanguage(nextLanguage);
+  };
 
   return { language, setLanguage };
 }

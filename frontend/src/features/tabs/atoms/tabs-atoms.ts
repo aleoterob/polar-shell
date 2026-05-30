@@ -1,28 +1,9 @@
 import { atom } from "jotai";
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import type { TerminalTab } from "@/features/terminal/types/terminal";
-
-const STORAGE_KEY_TABS = "polarshell:tabs";
-const STORAGE_KEY_ACTIVE_TAB = "polarshell:active-tab-id";
-
-type PersistedTab = Pick<TerminalTab, "id" | "title" | "shellId">;
-
-const jsonStorage = createJSONStorage<PersistedTab[]>(() => localStorage);
-const activeTabJsonStorage = createJSONStorage<string | null>(
-  () => localStorage,
-);
-
-const persistedTabsAtom = atomWithStorage<PersistedTab[]>(
-  STORAGE_KEY_TABS,
-  [],
-  jsonStorage,
-);
-
-const persistedActiveTabIdAtom = atomWithStorage<string | null>(
-  STORAGE_KEY_ACTIVE_TAB,
-  null,
-  activeTabJsonStorage,
-);
+import {
+  persistedActiveTabIdAtom,
+  persistedTabsAtom,
+} from "@/features/tabs/atoms/tabs-storage-atoms";
 
 /** Live ConPTY session IDs — not persisted across app restarts. */
 const sessionIdsAtom = atom<Record<string, string>>({});

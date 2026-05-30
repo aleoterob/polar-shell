@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/shared/components/ui/button';
 import { Tabs, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { cn } from '@/shared/lib/utils';
-import { useTerminalTabClose } from '@/features/tabs/hooks/use-terminal-tab-close';
+import { useTerminalTabCloseHandlers } from '@/features/tabs/hooks/use-terminal-tab-close-handlers';
 import type { TerminalTabsProps } from '@/features/tabs/types/terminal-tabs';
 
 export function TerminalTabs({
@@ -15,7 +15,7 @@ export function TerminalTabs({
 }: TerminalTabsProps) {
   const { t } = useTranslation();
   const { createCloseClickHandler, createCloseKeyHandler } =
-    useTerminalTabClose(onCloseTab);
+    useTerminalTabCloseHandlers(onCloseTab);
 
   return (
     <Tabs

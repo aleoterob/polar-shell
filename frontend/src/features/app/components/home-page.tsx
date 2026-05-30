@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { TerminalTabs } from '@/features/tabs/components/terminal-tabs';
 import { TerminalView } from '@/features/terminal/components/terminal-view';
-import { useCloseTerminalTab } from '@/features/tabs/hooks/use-close-terminal-tab';
-import { useTabExitedTitle } from '@/features/app/hooks/use-tab-exited-title';
+import { useRemoveTerminalTab } from '@/features/tabs/hooks/use-remove-terminal-tab';
 import { useTerminalApp } from '@/features/app/hooks/use-terminal-app';
 import { useTabsStore } from '@/features/tabs/hooks/use-tabs-store';
 import { cn } from '@/shared/lib/utils';
@@ -12,9 +11,8 @@ export function HomePage() {
   const { tabs, activeTabId, settings, openNewTab, setActiveTab } =
     useTerminalApp();
 
-  const closeTab = useCloseTerminalTab();
+  const closeTab = useRemoveTerminalTab();
   const { updateTabTitle, updateTabSessionId } = useTabsStore();
-  const formatTabExitedTitle = useTabExitedTitle();
 
   return (
     <>
@@ -47,7 +45,7 @@ export function HomePage() {
                 updateTabSessionId(tab.id, sessionId);
               }}
               onSessionExit={() => {
-                updateTabTitle(tab.id, formatTabExitedTitle(tab.title));
+                updateTabTitle(tab.id, t('app.tabExited', { title: tab.title }));
               }}
             />
           </div>

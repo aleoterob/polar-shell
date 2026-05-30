@@ -3,7 +3,7 @@ import { SettingsBackButton } from '@/features/settings/components/settings-back
 import {
   settingsSectionAtom,
   type SettingsSection,
-} from '@/features/settings/atoms/atoms';
+} from '@/features/settings/atoms/settings-atoms';
 import { SidebarMenuButton } from '@/shared/components/ui/sidebar';
 import { Globe, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
