@@ -132,7 +132,7 @@ Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 
 
 ### Regenerate app icons (Windows taskbar / exe)
 
-Icons are generated from `frontend/public/mediawiki-logo.svg`:
+Icons are generated from `frontend/public/react-dark.svg`:
 
 ```powershell
 cd build

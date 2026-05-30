@@ -184,10 +184,10 @@ tasks:
       - wails3 generate bindings -f '{{.BUILD_FLAGS}}'{{if ne .DEV "true"}} -clean=true{{end}}{{if eq .OBFUSCATED "true"}} -obfuscated{{end}} -ts
 
   generate:icons:
-    summary: Generates Windows `.ico` and Mac `.icns` from frontend/public/mediawiki-logo.svg.
+    summary: Generates Windows `.ico` and Mac `.icns` from frontend/public/react-dark.svg.
     dir: build
     sources:
-      - "../frontend/public/mediawiki-logo.svg"
+      - "../frontend/public/react-dark.svg"
       - "appicon.icon"
     generates:
       - "appicon.png"

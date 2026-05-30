@@ -1,6 +1,6 @@
-# Regenerates build/appicon.png and platform icons from frontend/public/mediawiki-logo.svg.
+# Regenerates build/appicon.png and platform icons from frontend/public/react-dark.svg.
 param(
-    [string]$SvgPath = "..\..\frontend\public\mediawiki-logo.svg",
+    [string]$SvgPath = "..\frontend\public\react-dark.svg",
     [switch]$SkipSyso,
     [string[]]$Architectures = @("amd64", "arm64")
 )
