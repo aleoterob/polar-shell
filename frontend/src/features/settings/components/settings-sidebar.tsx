@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 const SETTINGS_SIDEBAR_WIDTH = '15rem';
 
 const settingsSidebarButtonClassName =
-  'inline-flex h-8 w-full cursor-pointer items-center justify-start gap-2 pl-2 pr-2.5';
+  'inline-flex h-[34px] w-full cursor-pointer items-center justify-start gap-2 py-1.5 pl-2 pr-2.5';
 
 export function SettingsSidebar() {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ export function SettingsSidebar() {
     >
       <div className="flex flex-col p-2">
         <SettingsBackButton />
-        <div className="flex w-full flex-col gap-0 bg-transparent pt-4">
+        <div className="flex w-full flex-col gap-0.5 bg-transparent pt-4">
           <SidebarMenuButton
             type="button"
             isActive={section === 'general'}
@@ -36,7 +36,7 @@ export function SettingsSidebar() {
             onClick={() => selectSection('general')}
           >
             <Settings className="size-4 shrink-0" />
-            <span className="leading-none">{t('settings.general')}</span>
+            <span className="leading-normal">{t('settings.general')}</span>
           </SidebarMenuButton>
           <SidebarMenuButton
             type="button"
@@ -45,7 +45,7 @@ export function SettingsSidebar() {
             onClick={() => selectSection('languages')}
           >
             <Globe className="size-4 shrink-0" />
-            <span className="leading-none">{t('settings.languages')}</span>
+            <span className="leading-normal">{t('settings.languages')}</span>
           </SidebarMenuButton>
         </div>
       </div>
