@@ -9,7 +9,8 @@ The app is not a web page in a browser tab: it is a standalone `.exe` that embed
 - **Multiple tabs** — open, switch, and close terminal sessions independently
 - **Real shells** — PowerShell, CMD, WSL, and Git Bash (when available on the machine)
 - **Full terminal emulation** — ANSI colors, UTF-8, cursor, scrollback, resize, copy/paste via xterm.js
-- **App settings (backend)** — font, size, scrollback, default shell loaded from `%APPDATA%/PolarShell/` (no settings UI)
+- **App settings** — font, size, scrollback, default shell loaded from `%APPDATA%/PolarShell/`, plus a frontend settings area for UI preferences
+- **Workspaces shell** — first-run welcome flow, sidebar navigation, and persisted workspace metadata
 - **Dark UI** — Tailwind CSS + [shadcn/ui](https://ui.shadcn.com) (Base UI primitives), editor-style tab bar
 
 ## How it works
@@ -53,9 +54,9 @@ Open tabs (id, title, shell) and the active tab id are restored across restarts 
 |-------|----------------|
 | Desktop shell | [Wails v3](https://v3.wails.io), WebView2 |
 | Backend | Go 1.25+, ConPTY (`rurreac/conpty`) |
-| Frontend | React 18, TypeScript, **Vite** |
+| Frontend | React 19, TypeScript, **Vite**, React Compiler |
 | Terminal UI | xterm.js 6 + Fit / Search / Web Links addons |
-| App UI | Tailwind CSS v4, shadcn/ui (Base UI), [Jotai](https://jotai.org) |
+| App UI | Tailwind CSS v4, shadcn/ui (Base UI), [Jotai](https://jotai.org), [TanStack Router](https://tanstack.com/router) |
 
 ## Prerequisites
 
@@ -113,20 +114,29 @@ The UI uses a **feature-based** layout under `frontend/src/`:
 
 | Area | Path | Contents |
 |------|------|----------|
-| **features** | `features/<name>/` | Domain UI: `app`, `tabs`, `terminal` |
-| **shared** | `shared/` | shadcn/ui (`components/ui`), `lib/utils`, Wails bridge (`services/terminal-bridge.ts`), global hooks |
+| **routes** | `routes/` | TanStack Router file routes (`/`, `/welcome`, `/workspace`, `/settings`) |
+| **features** | `features/<name>/` | Domain UI and state: `app`, `keyboard-shortcuts`, `main-sidebar`, `settings`, `tabs`, `terminal`, `welcome`, `workspaces` |
+| **shared** | `shared/` | shadcn/ui (`components/ui`), `lib/utils`, Wails bridge (`services/terminal-bridge.ts`), i18n, global hooks |
+| **bindings** | `../bindings/` | Generated Wails TypeScript bindings consumed by the frontend |
 
 Each feature uses kebab-case folders and files, typically:
 
 ```text
 features/<feature>/
-├── atoms/           # Jotai atoms for that domain (atoms.ts)
+├── atoms/           # Jotai atoms for that domain
 ├── components/
 ├── hooks/           # Reads atoms from the same feature (or app orchestration)
+├── lib/             # Feature-specific pure helpers, when needed
 └── types/
 ```
 
-Jotai state lives in `tabs` (persisted tabs + sessions). `app/hooks/use-terminal-app.ts` composes tabs state and loads backend settings via `app/hooks/use-app-settings.ts`.
+Jotai state is split by feature. Persisted atoms use explicit `*-storage-atoms.ts` files, for example `tabs-storage-atoms.ts`, `workspaces-storage-atoms.ts`, and `main-sidebar-storage-atoms.ts`. Runtime or derived atoms use feature-specific names such as `tabs-atoms.ts` or `settings-atoms.ts`; avoid generic `atoms.ts` files for new feature state.
+
+`app/hooks/use-terminal-app.ts` composes tab state, backend settings, available shell profiles, and keyboard shortcuts. Terminal sessions are created lazily by `terminal/hooks/use-terminal-session.ts` when a tab becomes active; restored tab metadata comes from `localStorage`, while ConPTY sessions are always recreated on launch.
+
+The frontend uses React Compiler through `@vitejs/plugin-react` and `@rolldown/plugin-babel`. Avoid adding `useMemo`, `useCallback`, or `memo` for manual optimization unless there is a functional reason.
+
+Internationalization lives in `shared/i18n` with locale files under `src/locales/`.
 
 Wails TypeScript bindings live in `frontend/bindings/` (regenerate with `wails3 generate bindings`).
 
@@ -211,9 +221,10 @@ polar-shell/
 ├── frontend/
 │   ├── bindings/        # Generated Wails TS bindings
 │   ├── src/
-│   │   ├── features/    # app, tabs, terminal
-│   │   ├── shared/      # components/ui, lib, hooks, services
-│   │   ├── App.tsx
+│   │   ├── features/    # app, main-sidebar, settings, tabs, terminal, welcome, workspaces
+│   │   ├── routes/      # TanStack Router file routes
+│   │   ├── shared/      # components/ui, i18n, lib, hooks, services
+│   │   ├── routeTree.gen.ts
 │   │   └── main.tsx
 │   └── public/          # Static assets (logo, fonts)
 ├── build/
