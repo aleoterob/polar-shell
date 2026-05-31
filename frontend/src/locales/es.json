@@ -18,6 +18,11 @@
     "languageSpanish": "Español",
     "languageEnglish": "Inglés"
   },
+  "window": {
+    "minimize": "Minimizar",
+    "maximize": "Maximizar",
+    "close": "Cerrar"
+  },
   "tabs": {
     "closeTab": "Cerrar {{title}}",
     "newTab": "Nueva pestaña de terminal"

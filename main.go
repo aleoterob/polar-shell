@@ -34,11 +34,15 @@ func main() {
 	})
 
 	app.Window.NewWithOptions(application.WebviewWindowOptions{
-		Title:            "PolarShell",
-		Width:            1280,
-		Height:           800,
-		MinWidth:         640,
-		MinHeight:        400,
+		Title:     "PolarShell",
+		Width:     1280,
+		Height:    800,
+		MinWidth:  640,
+		MinHeight: 400,
+		Frameless: true,
+		Windows: application.WindowsWindow{
+			DisableFramelessWindowDecorations: true,
+		},
 		StartState:       application.WindowStateMaximised,
 		BackgroundColour: application.NewRGB(12, 12, 12),
 		URL:              "/",

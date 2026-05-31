@@ -18,6 +18,11 @@
     "languageSpanish": "Spanish",
     "languageEnglish": "English"
   },
+  "window": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "close": "Close"
+  },
   "tabs": {
     "closeTab": "Close {{title}}",
     "newTab": "New terminal tab"

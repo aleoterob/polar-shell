@@ -181,7 +181,7 @@ tasks:
       - frontend/bindings/**/*
     cmds:
       # DEV skips -clean to avoid deleting bindings while Vite holds them open (Windows "Acceso denegado").
-      - wails3 generate bindings -f '{{.BUILD_FLAGS}}'{{if ne .DEV "true"}} -clean=true{{end}}{{if eq .OBFUSCATED "true"}} -obfuscated{{end}} -ts
+      - '{{if eq .DEV "true"}}powershell -NoProfile -File build/scripts/generate-bindings-dev.ps1{{else}}wails3 generate bindings -f "{{.BUILD_FLAGS}}" -clean=true{{if eq .OBFUSCATED "true"}} -obfuscated{{end}} -ts{{end}}'
 
   generate:icons:
     summary: Generates Windows `.ico` and Mac `.icns` from frontend/public/react-dark.svg.

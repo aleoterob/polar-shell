@@ -18,18 +18,12 @@ import { AnimatedArrow } from '@/features/welcome/components/animated-arrow';
 import { SBAddWorkspaceBtn } from '@/features/workspaces/components/sb-add-workspace-btn';
 import { SBWorkspacesLabel } from '@/features/workspaces/components/sb-workspaces-label';
 import { useWorkspaces } from '@/features/workspaces/hooks/use-workspaces';
+import { APP_MAIN_TOP_BAR_HEIGHT } from '@/features/app/constants/app-main-top-bar-layout';
 import { cn } from '@/shared/lib/utils';
-
-/** NOTE: Expanded sidebar width (shadcn default is 16rem). */
-export const MAIN_SIDEBAR_WIDTH = '15rem';
-
-export const mainSidebarProviderStyle = {
-  '--sidebar-width': MAIN_SIDEBAR_WIDTH,
-  '--sidebar-width-mobile': MAIN_SIDEBAR_WIDTH,
-} as CSSProperties;
 
 export function MainSidebar({
   className,
+  style,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
@@ -38,12 +32,20 @@ export function MainSidebar({
   const { hasWorkspaces } = useWorkspaces();
   const isIconCollapsed = state === 'collapsed' && !isMobile;
   const showSettingsTooltip = isIconCollapsed;
+  const sidebarStyle = isMobile
+    ? undefined
+    : ({
+        top: APP_MAIN_TOP_BAR_HEIGHT,
+        bottom: 0,
+        height: 'auto',
+      } satisfies CSSProperties);
 
   return (
     <Sidebar
       side="left"
       collapsible="icon"
       className={cn('!border-r-0', className)}
+      style={sidebarStyle ? { ...sidebarStyle, ...style } : style}
       {...props}
     >
       <SidebarHeader

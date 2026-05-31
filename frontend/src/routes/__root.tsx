@@ -1,14 +1,6 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
-import { TooltipProvider } from '@/shared/components/ui/tooltip';
+import { createRootRoute } from '@tanstack/react-router';
+import { RootRouteComponent } from '@/routes/-components/root-route-component';
 
 export const Route = createRootRoute({
-  component: RootRoute,
+  component: RootRouteComponent,
 });
-
-function RootRoute() {
-  return (
-    <TooltipProvider>
-      <Outlet />
-    </TooltipProvider>
-  );
-}

@@ -1,7 +1,5 @@
-import {
-  MainSidebar,
-  mainSidebarProviderStyle,
-} from '@/features/main-sidebar/components/main-sidebar';
+import { MainSidebar } from '@/features/main-sidebar/components/main-sidebar';
+import { mainSidebarProviderStyle } from '@/features/main-sidebar/lib/main-sidebar-layout';
 import { useMainSidebarState } from '@/features/main-sidebar/hooks/use-main-sidebar-state';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/sidebar';
 import { TooltipProvider } from '@/shared/components/ui/tooltip';
@@ -15,7 +13,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <SidebarProvider
         open={mainSidebarOpen}
         onOpenChange={setMainSidebarOpen}
-        className="flex h-svh min-h-0 w-full bg-background"
+        className="flex h-full min-h-0 w-full bg-background"
         style={mainSidebarProviderStyle}
       >
         <MainSidebar />
