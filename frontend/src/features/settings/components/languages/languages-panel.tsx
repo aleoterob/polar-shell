@@ -23,7 +23,7 @@ export function LanguagesPanel() {
 
   return (
     <div className="flex w-full max-w-sm flex-col items-start">
-      <div className="settings-languages-title-divider">
+      <div className="w-full transform-gpu pb-4 shadow-[inset_0_-0.5px_0_0_color-mix(in_oklab,var(--muted-foreground)_50%,transparent)]">
         <h1 className="m-0 p-0 font-semibold tracking-tight">
           <div className="flex h-7 items-center gap-2.5">
             <Globe className="block size-6 shrink-0" aria-hidden />

@@ -3,6 +3,7 @@ import { mainSidebarProviderStyle } from '@/features/main-sidebar/lib/main-sideb
 import { useMainSidebarState } from '@/features/main-sidebar/hooks/use-main-sidebar-state';
 import { SidebarInset, SidebarProvider } from '@/shared/components/ui/sidebar';
 import { TooltipProvider } from '@/shared/components/ui/tooltip';
+import { cn } from '@/shared/lib/utils';
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { open: mainSidebarOpen, setOpen: setMainSidebarOpen } =
@@ -17,7 +18,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         style={mainSidebarProviderStyle}
       >
         <MainSidebar />
-        <SidebarInset className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <SidebarInset
+          className={cn(
+            'flex min-h-0 flex-1 flex-col overflow-hidden',
+            mainSidebarOpen && 'rounded-tl-lg',
+          )}
+        >
           {children}
         </SidebarInset>
       </SidebarProvider>

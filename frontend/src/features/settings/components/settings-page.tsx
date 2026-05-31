@@ -10,7 +10,7 @@ export function SettingsPage() {
   return (
     <SidebarProvider className="flex h-full min-h-0 w-full items-stretch">
       <SettingsSidebar />
-      <div className="settings-page-content flex h-full min-h-0 flex-1 items-start justify-center overflow-auto p-8">
+      <div className="relative flex h-full min-h-0 flex-1 transform-gpu items-start justify-center overflow-auto rounded-tl-lg bg-page-background p-8 shadow-[inset_0.5px_0.5px_0_0_color-mix(in_oklab,var(--muted-foreground)_35%,transparent)]">
         {section === 'languages' ? <LanguagesPanel /> : null}
       </div>
     </SidebarProvider>

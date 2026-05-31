@@ -162,32 +162,10 @@
     background-color: var(--terminal-tab-active-background);
   }
 
-  .settings-page-content {
-    background-color: var(--page-background);
-  }
-
   .xterm,
   .xterm .xterm-viewport,
   .xterm .xterm-screen {
     background-color: var(--terminal-background);
-  }
-
-  .settings-languages-title-divider {
-    position: relative;
-    width: 100%;
-    padding-bottom: 1rem;
-  }
-
-  .settings-languages-title-divider::after {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 1px;
-    transform: scaleY(0.75);
-    transform-origin: bottom center;
-    background-color: var(--foreground);
-    content: '';
   }
 }
 
