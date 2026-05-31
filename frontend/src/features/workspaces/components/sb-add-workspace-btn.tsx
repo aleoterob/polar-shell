@@ -8,7 +8,7 @@ export function SBAddWorkspaceBtn() {
 
   return (
     <Button
-      render={<Link to="/workspace" />}
+      render={<Link to="/workspace" preload="render" />}
       variant="supabase"
       size="sm"
       className="h-[25px] w-fit shrink-0 rounded-full px-2 pr-3 text-[11px] font-normal transform-none"

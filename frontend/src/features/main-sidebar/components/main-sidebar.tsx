@@ -101,7 +101,13 @@ export function MainSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              render={<Link to="/settings" onClick={expandIfCollapsed} />}
+              render={
+                <Link
+                  to="/settings"
+                  preload="render"
+                  onClick={expandIfCollapsed}
+                />
+              }
               tooltip={
                 showSettingsTooltip ? t('mainSidebar.settings') : undefined
               }
